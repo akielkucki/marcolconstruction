@@ -4,13 +4,27 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { siteConfig } from "@/components/index";
 import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
+
+// Bento grid span config per index position
+const gridSpans = [
+  "md:col-span-8 md:row-span-2",   // 0 — large featured
+  "md:col-span-4 md:row-span-1",   // 1 — small right top
+  "md:col-span-4 md:row-span-1",   // 2 — small right bottom
+  "md:col-span-4 md:row-span-2",   // 3 — tall left
+  "md:col-span-4 md:row-span-2",   // 4 — tall center
+  "md:col-span-4 md:row-span-2",   // 5 — tall right
+];
 
 export function Portfolio() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  const categories = ["All", ...new Set(siteConfig.portfolio.map((p) => p.category))];
+  const categories = [
+    "All",
+    ...new Set(siteConfig.portfolio.map((p) => p.category)),
+  ];
   const [activeCategory, setActiveCategory] = useState("All");
 
   const filteredProjects =
@@ -20,9 +34,13 @@ export function Portfolio() {
 
   return (
     <section id="portfolio" className="relative py-32 bg-background" ref={ref}>
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      {/* Subtle background texture */}
+      <div className="absolute inset-0 grid-pattern opacity-20 pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
         {/* Section header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-20">
           <div className="max-w-xl">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -48,7 +66,7 @@ export function Portfolio() {
             </motion.h2>
           </div>
 
-          {/* Category filter */}
+          {/* Category filter pills */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -60,10 +78,10 @@ export function Portfolio() {
                 type="button"
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-4 py-2 font-[family-name:var(--font-inter)] text-sm font-medium transition-all duration-300 ${
+                className={`px-5 py-2.5 rounded-full font-[family-name:var(--font-inter)] text-sm font-medium transition-all duration-300 ${
                   activeCategory === category
-                    ? "bg-foreground text-background"
-                    : "bg-transparent text-muted border border-border hover:border-foreground hover:text-foreground"
+                    ? "bg-foreground text-background shadow-lg shadow-foreground/10"
+                    : "bg-surface/50 text-muted border border-border/50 hover:border-foreground/30 hover:text-foreground"
                 }`}
               >
                 {category}
@@ -72,116 +90,157 @@ export function Portfolio() {
           </motion.div>
         </div>
 
-        {/* Projects grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map((project, index) => (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 40 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.2 + index * 0.1 }}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-              className="group relative aspect-[4/5] overflow-hidden cursor-pointer"
-            >
-              {/* Placeholder gradient background */}
-              {project.image ?
-              <Image src={project.image} alt={`${project.title} cover photo`} width={1920} height={1080} className={`z-0 absolute object-cover min-h-full inset-0 transition-transform duration-700 ${hoveredIndex === index ? "scale-110" : "scale-100"}`}/>
-                  : <div
-                      className={`absolute inset-0 bg-gradient-to-br transition-transform duration-700 ${
-                          index % 3 === 0
-                              ? "from-surface-elevated to-surface"
-                              : index % 3 === 1
-                                  ? "from-surface to-background"
-                                  : "from-background to-surface-elevated"
-                      } ${hoveredIndex === index ? "scale-110" : "scale-100"}`}
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 md:auto-rows-[220px] gap-4">
+          {filteredProjects.map((project, index) => {
+            const spanClass =
+              filteredProjects.length === siteConfig.portfolio.length
+                ? gridSpans[index] || "md:col-span-4 md:row-span-2"
+                : "md:col-span-4 md:row-span-2";
+
+            return (
+              <motion.div
+                key={project.title}
+                initial={{ opacity: 0, y: 50, scale: 0.95 }}
+                animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+                transition={{
+                  duration: 0.8,
+                  delay: 0.15 + index * 0.08,
+                  ease: [0.19, 1, 0.22, 1],
+                }}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                className={`group relative overflow-hidden rounded-2xl cursor-pointer ${spanClass} min-h-[300px] md:min-h-0`}
+              >
+                {/* Image */}
+                {project.image && (
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className={`object-cover transition-all duration-[800ms] ease-[cubic-bezier(0.19,1,0.22,1)] ${
+                      hoveredIndex === index
+                        ? "scale-110 brightness-[0.6]"
+                        : "scale-100 brightness-[0.75]"
+                    }`}
                   />
+                )}
 
+                {/* Gradient overlays */}
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent opacity-90" />
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br from-surface/30 to-transparent transition-opacity duration-500 ${
+                    hoveredIndex === index ? "opacity-60" : "opacity-0"
+                  }`}
+                />
 
-              }
+                {/* Corner geometric accent */}
+                <div
+                  className={`absolute top-0 right-0 transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] ${
+                    hoveredIndex === index
+                      ? "w-24 h-24"
+                      : "w-16 h-16"
+                  }`}
+                >
+                  <div className="absolute top-4 right-4 w-full h-full border-t border-r border-foreground/20 rounded-tr-2xl" />
+                </div>
 
+                {/* Content */}
+                <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end">
+                  {/* Category tag */}
+                  <motion.div
+                    animate={{ y: hoveredIndex === index ? -6 : 0 }}
+                    transition={{ duration: 0.4, ease: [0.19, 1, 0.22, 1] }}
+                    className="mb-3"
+                  >
+                    <span className="inline-block px-3 py-1 rounded-full bg-foreground/10 backdrop-blur-sm border border-foreground/10 font-[family-name:var(--font-inter)] text-[11px] font-medium tracking-[0.15em] text-foreground/80 uppercase">
+                      {project.category}
+                    </span>
+                  </motion.div>
 
-              {/* Overlay pattern */}
-              <div className="absolute inset-0 grid-pattern opacity-30" />
+                  {/* Title */}
+                  <motion.h3
+                    animate={{ y: hoveredIndex === index ? -6 : 0 }}
+                    transition={{
+                      duration: 0.4,
+                      delay: 0.03,
+                      ease: [0.19, 1, 0.22, 1],
+                    }}
+                    className="font-[family-name:var(--font-space-grotesk)] text-xl md:text-2xl font-bold text-foreground mb-2 leading-tight"
+                  >
+                    {project.title}
+                  </motion.h3>
 
-              {/* Decorative elements */}
-              <div className="absolute top-8 left-8 w-20 h-20 border border-foreground/10" />
-              <div className="absolute bottom-16 right-8 w-12 h-12 border border-foreground/10" />
+                  {/* Description — revealed on hover */}
+                  <motion.p
+                    initial={false}
+                    animate={{
+                      opacity: hoveredIndex === index ? 1 : 0,
+                      y: hoveredIndex === index ? 0 : 16,
+                      height: hoveredIndex === index ? "auto" : 0,
+                    }}
+                    transition={{
+                      duration: 0.4,
+                      delay: 0.06,
+                      ease: [0.19, 1, 0.22, 1],
+                    }}
+                    className="font-[family-name:var(--font-inter)] text-sm text-muted leading-relaxed overflow-hidden"
+                  >
+                    {project.description}
+                  </motion.p>
 
-              {/* Content overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent opacity-80" />
+                  {/* View button */}
+                  <motion.div
+                    initial={false}
+                    animate={{
+                      opacity: hoveredIndex === index ? 1 : 0,
+                      x: hoveredIndex === index ? 0 : -16,
+                    }}
+                    transition={{
+                      duration: 0.4,
+                      delay: 0.1,
+                      ease: [0.19, 1, 0.22, 1],
+                    }}
+                    className="mt-4 flex items-center gap-2"
+                  >
+                    <span className="font-[family-name:var(--font-inter)] text-sm font-semibold text-foreground tracking-wide">
+                      View Project
+                    </span>
+                    <div className="w-7 h-7 rounded-full bg-foreground/10 backdrop-blur-sm flex items-center justify-center border border-foreground/10">
+                      <ArrowUpRight className="w-3.5 h-3.5 text-foreground" />
+                    </div>
+                  </motion.div>
+                </div>
 
-              {/* Content */}
-              <div className="absolute inset-0 p-8 flex flex-col justify-end">
+                {/* Bottom accent line */}
                 <motion.div
-                    className="mb-3 w-fit relative" // Added w-fit and relative
-                    animate={{ y: hoveredIndex === index ? -8 : 0 }}
-                    transition={{ duration: 0.4 }}
-                >
-                  {/* The Text */}
-                  <p className="relative z-10 text-xs font-medium tracking-[0.2em] text-foreground uppercase text-shadow-black drop-shadow-md drop-shadow-black">
-                    {project.category}
-                  </p>
-
-                  {/* The Bar */}
-                  {/* Adjust 'bg-yellow-500' to your brand color or use bg-muted */}
-                  <div className="absolute -bottom-1 -left-1 w-full h-3 bg-muted/40 -z-0 -rotate-1 origin-bottom-left"></div>
-                </motion.div>
-
-                <motion.h3
-                  className="font-[family-name:var(--font-space-grotesk)] text-2xl font-bold text-foreground mb-2"
-                  animate={{ y: hoveredIndex === index ? -8 : 0 }}
-                  transition={{ duration: 0.4, delay: 0.05 }}
-                >
-                  {project.title}
-                </motion.h3>
-
-                <motion.p
-                  className="font-[family-name:var(--font-inter)] text-sm text-muted"
-                  initial={{ opacity: 0, y: 20 }}
+                  className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-foreground/0 via-foreground/40 to-foreground/0"
+                  initial={false}
                   animate={{
+                    scaleX: hoveredIndex === index ? 1 : 0,
                     opacity: hoveredIndex === index ? 1 : 0,
-                    y: hoveredIndex === index ? 0 : 20,
                   }}
-                  transition={{ duration: 0.4, delay: 0.1 }}
-                >
-                  {project.description}
-                </motion.p>
-
-                {/* View button */}
-                <motion.div
-                  className="mt-6 flex items-center gap-2"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{
-                    opacity: hoveredIndex === index ? 1 : 0,
-                    x: hoveredIndex === index ? 0 : -20,
-                  }}
-                  transition={{ duration: 0.4, delay: 0.15 }}
-                >
-                  <span className="font-[family-name:var(--font-inter)] text-sm font-medium text-foreground tracking-wide">
-                    View Project
-                  </span>
-                  <svg className="w-4 h-4 text-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </motion.div>
-              </div>
-
-              {/* Corner accent */}
-              <div className="absolute top-0 right-0 w-0 h-0 border-t-[60px] border-t-foreground/5 border-l-[60px] border-l-transparent transition-all duration-500 group-hover:border-t-foreground/10" />
-            </motion.div>
-          ))}
+                  transition={{ duration: 0.5, ease: [0.19, 1, 0.22, 1] }}
+                />
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* View all link */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.6 }}
+          transition={{ duration: 0.6, delay: 0.7 }}
           className="mt-16 text-center"
         >
-          <a href="/projects" className="btn-outline inline-flex">
+          <a
+            href="/projects"
+            className="group inline-flex items-center gap-3 px-8 py-4 rounded-full border border-border/50 bg-surface/30 backdrop-blur-sm text-foreground font-[family-name:var(--font-inter)] font-semibold text-sm tracking-wide uppercase transition-all duration-500 hover:bg-foreground hover:text-background hover:border-foreground hover:shadow-lg hover:shadow-foreground/10"
+          >
             <span>View All Projects</span>
+            <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
         </motion.div>
       </div>

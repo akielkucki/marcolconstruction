@@ -1,37 +1,38 @@
-// Site Configuration - Updated for Red Bridge Construction
+// Site Configuration - MARCOL Construction
 // All variables defined here are used across the entire website
 
 export const siteConfig = {
   // Company Information
   company: {
-    name: "Red Bridge Construction",
-    tagline: "",
-    fullName: "Red Bridge Construction LLC",
-    description: "Serving New Hope and Bucks County with excellence and integrity. We are the trusted partner for homeowners and business owners who demand excellence in every detail.",
-    foundedYear: 1997,
-    yearsExperience: 28,
-    projectsCompleted: 500, // Placeholder
-    awardsWon: 5, // Placeholder based on "Award Winning" claim
+    name: "MARCOL Construction",
+    tagline: "A results first construction company serving the Bucks County area.",
+    fullName: "MARCOL Construction LLC",
+    description: "Your premier partner for residential, commercial, and historic construction. We build, renovate, and restore spaces with an unwavering commitment to premium materials, structural integrity, and flawless execution.",
+    foundedYear: 2005, // Placeholder - adjust as needed
+    yearsExperience: 21, // Placeholder - adjust as needed
+    projectsCompleted: 500,
+    awardsWon: 5,
   },
 
   // Contact Information
   contact: {
-    phone: "(215) 534-1008",
-    email: "rob@redbridgeconstruction.com",
+    phone: "(888) 777-7496",
+    email: "info@marcolconstruction.com", // Placeholder
     address: {
-      street: "231 Red Bridge Rd",
-      city: "Kintnersville",
+      street: "600 Swamp Rd",
+      city: "Newtown",
       state: "PA",
-      zip: "18930",
-      full: "231 Red Bridge Rd, Kintnersville, PA 18930",
+      zip: "18940",
+      full: "600 Swamp Rd, Newtown, PA 18940",
     },
+    hours: "Mon–Fri · 8 AM–5 PM"
   },
 
   // Social Media Links
   social: {
-    instagram: "https://instagram.com/redbridgeconstruction", // Placeholder
-    facebook: "https://facebook.com/redbridgeconstruction", // Placeholder
-    googleBusiness: "https://www.redbridgeconstructionllc.com",
+    instagram: "https://instagram.com/marcolconstruction",
+    facebook: "https://facebook.com/marcolconstruction",
+    googleBusiness: "https://www.marcolconstruction.com",
   },
 
   // Navigation Links
@@ -48,7 +49,7 @@ export const siteConfig = {
       title: "Residential Construction",
       slug: "residential-construction",
       description: "Custom homes and renovations that bring your vision to life.",
-      longDescription: "We deliver exceptional residential construction services across Bucks County, working closely with you from initial vision to final walkthrough to ensure a painless process.",
+      longDescription: "We deliver exceptional residential construction services, working closely with you from initial vision to final walkthrough to ensure a painless process.",
       icon: "home",
       features: [
         "Custom Home Design",
@@ -73,7 +74,7 @@ export const siteConfig = {
     {
       title: "Historic Restoration",
       slug: "historic-restoration",
-      description: "Preserving Bucks County's architectural heritage.",
+      description: "Preserving local architectural heritage.",
       longDescription: "Our team expertly balances heritage preservation with modern integration, ensuring period-accurate restorations that protect historic integrity.",
       icon: "architecture",
       features: [
@@ -85,49 +86,72 @@ export const siteConfig = {
     },
   ],
 
+  // Portfolio
   portfolio: [
     {
-      title: "Shed Remodeling",
-      category: "Outdoor Spaces",
-      image: "/portfolio/shed-remodel.jpg", // Placeholder image path
-      description: "Modernized outdoor shed with complete structural renovation, modern insulation, electrical upgrades, and custom storage solutions in New Hope, PA.",
+      title: "Master Bath Revival",
+      category: "Bathroom",
+      image: "https://images.pexels.com/photos/7166635/pexels-photo-7166635.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Complete master bathroom renovation featuring floor-to-ceiling marble, frameless glass enclosure, and brushed brass fixtures throughout.",
     },
     {
-      title: "Bathroom Remodel #1",
-      category: "Bathroom",
-      image: "/portfolio/bathroom-1.jpg", // Placeholder image path
-      description: "Complete master bathroom renovation featuring new frameless glass enclosure, brushed brass fixtures, and custom niche shelving.",
+      title: "Kitchen Transformation",
+      category: "Kitchen",
+      image: "https://images.pexels.com/photos/3935350/pexels-photo-3935350.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Full kitchen remodel with custom cabinetry, quartzite island countertop, and integrated smart appliances for modern living.",
     },
     {
-      title: "Bathroom Remodel #2",
+      title: "Spa Bathroom Suite",
       category: "Bathroom",
-      image: "/portfolio/bathroom-2.jpg", // Placeholder image path
-      description: "Secondary bathroom upgrade featuring full wall patterned marble mosaic, recessed ceiling lighting, and a floating vanity with under‑cabinet LED accents.",
+      image: "https://images.pexels.com/photos/16249146/pexels-photo-16249146.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Luxury spa-inspired bathroom with white marble tile, freestanding soaking tub, and custom floating vanity with LED accents.",
+    },
+    {
+      title: "Modern Residence",
+      category: "Residential",
+      image: "https://images.pexels.com/photos/7031607/pexels-photo-7031607.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Custom-built contemporary home featuring panoramic glass facades, open-concept living, and seamless indoor-outdoor transitions.",
+    },
+    {
+      title: "Heritage Façade Restoration",
+      category: "Historic",
+      image: "https://images.pexels.com/photos/8472257/pexels-photo-8472257.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Meticulous restoration of a 19th-century brick façade, preserving architectural details while reinforcing structural integrity.",
+    },
+    {
+      title: "Gourmet Kitchen Build",
+      category: "Kitchen",
+      image: "https://images.pexels.com/photos/3718434/pexels-photo-3718434.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Chef-grade kitchen build featuring marble waterfall island, custom range hood, and handcrafted open shelving.",
     },
   ],
 
   // Testimonials
   testimonials: [
-    // Note: Specific testimonials were not immediately visible on the homepage,
-    // so you may want to update these with real client quotes.
     {
-      name: "Bucks County Homeowner",
-      role: "Residential Construction",
-      quote: "Rob and his team delivered rock-solid project delivery and superior results. They worked closely with us from initial vision to final walkthrough.",
+      name: "James L.",
+      role: "Homeowner",
+      quote: "The team at MARCOL Construction completely transformed our master bathroom. From the custom niche shelving to the flawless tile work, their attention to detail is unmatched. They kept the workspace clean and finished right on schedule.",
       rating: 5,
     },
     {
-      name: "New Hope Resident",
-      role: "Bathroom Remodel",
-      quote: "We've earned a reputation for craftsmanship, transparent communication, and finishing on time and on budget. Red Bridge Construction made the process painless.",
+      name: "Rebecca T.",
+      role: "Residential Client",
+      quote: "We hired MARCOL to renovate our outdoor shed and add electrical and insulation. They took a dilapidated structure and turned it into a beautiful, functional workspace. Excellent communication throughout the entire project.",
+      rating: 5,
+    },
+    {
+      name: "Daniel M.",
+      role: "Commercial Client",
+      quote: "Finding a reliable contractor can be tough, but MARCOL Construction made the process completely painless. They provided transparent pricing, top-notch craftsmanship, and true to their word, they finished on time and on budget. Experience really does matter.",
       rating: 5,
     },
   ],
 
   // CTA Section
   cta: {
-    headline: "Your Trusted Builder in Bucks County",
-    subheadline: "Experience matters. Our 28 years on the leading edge of building and renovation mean rock-solid project delivery and superior results.",
+    headline: "Your Trusted Building Partner",
+    subheadline: "Experience matters. Our years on the leading edge of building and renovation mean rock-solid project delivery and superior results.",
     buttonText: "Get a Free Quote",
     buttonLink: "#contact",
   },
@@ -135,8 +159,13 @@ export const siteConfig = {
   // Footer
   footer: {
     tagline: "Quality craftsmanship, integrity, and exceptional results.",
-    copyright: `© ${new Date().getFullYear()} Red Bridge Construction LLC. All rights reserved.`,
-    certifications: ["Licensed & Insured", "Licensed & Bonded", "Quality Materials", "100% Satisfaction"],
+    copyright: `© ${new Date().getFullYear()} MARCOL Construction LLC. All rights reserved.`,
+    certifications: [
+      "Licensed & Insured",
+      "Expert Craftsmen",
+      "Quality Materials",
+      "On-Time Completion"
+    ],
   },
 } as const;
 

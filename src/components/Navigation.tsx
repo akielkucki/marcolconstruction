@@ -91,7 +91,7 @@ function DesktopDropdown({
     >
       <a
         href={item.href}
-        className={`relative font-[family-name:var(--font-inter)] font-medium transition-all duration-300 group inline-flex items-center gap-1 ${
+        className={`relative bottom-[2px] font-[family-name:var(--font-inter)] font-medium transition-all duration-300 group inline-flex items-center gap-1 ${
           isScrolled
             ? "text-xs text-accent-muted hover:text-foreground"
             : "text-sm text-zinc-500 hover:text-zinc-900"
@@ -303,9 +303,9 @@ export function Navigation() {
                 <span className={`font-[family-name:var(--font-space-grotesk)] font-bold tracking-tight transition-all duration-500 ${isScrolled ? "text-lg text-foreground" : "text-2xl text-zinc-900"}`}>
                   {siteConfig.company.name}
                 </span>
-                <span className={`font-[family-name:var(--font-space-grotesk)] font-light tracking-tight transition-all duration-500 ${isScrolled ? "text-lg text-muted hidden lg:inline" : "text-2xl text-zinc-400"}`}>
-                  {siteConfig.company.tagline}
-                </span>
+                {/*<span className={`font-[family-name:var(--font-space-grotesk)] font-light tracking-tight transition-all duration-500 ${isScrolled ? "text-lg text-muted hidden lg:inline" : "text-2xl text-zinc-400"}`}>*/}
+                {/*  {siteConfig.company.tagline}*/}
+                {/*</span>*/}
               </a>
 
               {/* Desktop Navigation */}
